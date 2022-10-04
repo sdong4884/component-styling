@@ -23,6 +23,16 @@ const sizeStyles = css`
   `}
 `
 
+const fullWidthStyle = css`
+  ${props => props.fullWidth && css`
+    width: 100%;
+    & + & {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+  `}
+`
+
 const StyledButton = styled.button`
   display: inline-flex;
   align-items: center;
@@ -47,6 +57,15 @@ const StyledButton = styled.button`
       &:active {
         background: ${darken(0.1, selected)};
       }
+      ${props => props.outline && css`
+        color: ${selected};
+        background: none;
+        border: 1px solid ${selected};
+        &:hover {
+          background: ${selected};
+          color: #fff;
+        }
+      `}
     `
   }}
   /* background: ${props => props.theme.palette.blue};
@@ -60,13 +79,16 @@ const StyledButton = styled.button`
   & + & {
     margin-left: 1rem;
   }
+  ${fullWidthStyle}
 `
 
-function Button({ children, color, size, ...rest }) {
+function Button({ children, color, size, outline, fullWidth, ...rest }) {
   return (
     <StyledButton 
       color={color}
       size={size}
+      outline={outline}
+      fullWidth={fullWidth}
       {...rest}
     >
       {children}
