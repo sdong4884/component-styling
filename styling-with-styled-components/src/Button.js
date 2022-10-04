@@ -2,7 +2,26 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { darken, lighten } from 'polished';
 
-
+const sizes = {
+  large: {
+    height: '3rem',
+    fontSize: '1.25rem'
+  },
+  medium: {
+    height: '2.25rem',
+    fontSize: '1rem'
+  },
+  small: {
+    height: '1.75rem',
+    fontSize: '0.875rem'
+  }
+}
+const sizeStyles = css`
+  ${({ size }) => css`
+    height: ${sizes[size].height};
+    font-size: ${sizes[size].fontSize};
+  `}
+`
 
 const StyledButton = styled.button`
   display: inline-flex;
@@ -16,8 +35,7 @@ const StyledButton = styled.button`
   padding: 0 1rem;
   cursor: pointer;
 
-  height: 2.25rem;
-  font-size: 1rem;
+  ${sizeStyles}
 
   ${({ theme, color }) => {
     const selected = theme.palette[color];
@@ -44,10 +62,11 @@ const StyledButton = styled.button`
   }
 `
 
-function Button({ children, color, ...rest }) {
+function Button({ children, color, size, ...rest }) {
   return (
     <StyledButton 
       color={color}
+      size={size}
       {...rest}
     >
       {children}
@@ -56,6 +75,7 @@ function Button({ children, color, ...rest }) {
 }
 
 Button.defaultProps = {
-  color: 'blue'
+  color: 'blue',
+  size: 'medium'
 }
 export default Button;
